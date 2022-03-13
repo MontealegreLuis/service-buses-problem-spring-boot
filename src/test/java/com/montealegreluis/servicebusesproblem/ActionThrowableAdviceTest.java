@@ -60,7 +60,9 @@ final class ActionThrowableAdviceTest {
 
     var problem = response.getBody();
     assertNotNull(problem);
-    assertEquals(0, problem.getAdditionalProperties().size());
+    assertEquals(1, problem.getAdditionalProperties().size());
+    assertTrue(problem.getAdditionalProperties().containsKey("code"));
+    assertEquals("application-error", problem.getAdditionalProperties().get("code"));
   }
 
   @Test
