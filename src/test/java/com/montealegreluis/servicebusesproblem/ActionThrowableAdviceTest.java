@@ -15,7 +15,7 @@ import org.springframework.web.servlet.HandlerMapping;
 
 final class ActionThrowableAdviceTest {
   @Test
-  void it_includes_action_prefix_in_problem_code_property() {
+  void it_includes_action_prefix_in_problem_code_property_and_in_detail() {
     var advice =
         new ActionThrowableAdvice() {
           @Override
@@ -34,6 +34,7 @@ final class ActionThrowableAdviceTest {
 
     var problem = response.getBody();
     assertNotNull(problem);
+    assertEquals("Cannot search concerts. Cannot connect to MySQL server", problem.getDetail());
     assertEquals(1, problem.getAdditionalProperties().size());
     assertTrue(problem.getAdditionalProperties().containsKey("code"));
     assertEquals(
@@ -41,7 +42,7 @@ final class ActionThrowableAdviceTest {
   }
 
   @Test
-  void it_does_not_includes_action_prefix_in_problem_code_property() {
+  void it_does_not_includes_action_prefix_in_problem_code_property_and_in_detail() {
     var advice =
         new ActionThrowableAdvice() {
           @Override
@@ -60,6 +61,7 @@ final class ActionThrowableAdviceTest {
 
     var problem = response.getBody();
     assertNotNull(problem);
+    assertEquals("Cannot connect to MySQL server", problem.getDetail());
     assertEquals(1, problem.getAdditionalProperties().size());
     assertTrue(problem.getAdditionalProperties().containsKey("code"));
     assertEquals("application-error", problem.getAdditionalProperties().get("code"));
@@ -71,7 +73,7 @@ final class ActionThrowableAdviceTest {
     var activity =
         Activity.error(
             "search-concerts-application-error",
-            exception.getMessage(),
+            "Cannot search concerts. " + exception.getMessage(),
             (context) -> {
               context.put("exception", contextFrom(exception));
               context.put("action", "search-concerts");

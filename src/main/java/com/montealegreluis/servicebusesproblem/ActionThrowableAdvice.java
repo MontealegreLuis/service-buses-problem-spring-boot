@@ -10,11 +10,12 @@ import org.springframework.web.context.request.NativeWebRequest;
 public interface ActionThrowableAdvice extends ThrowableAdvice, ControllerActionTrait {
   @Override
   default void enhanceThrowableProblem(
-      final ApiProblemBuilder builder, final NativeWebRequest request) {
+      final ApiProblemBuilder builder, final Throwable exception, final NativeWebRequest request) {
     final Action action = actionFrom(request);
 
     if (action == null) return;
 
+    builder.withDetail("Cannot " + action.toWords() + ". " + exception.getMessage());
     builder.with("code", action.toSlug() + "-application-error");
   }
 
@@ -25,6 +26,7 @@ public interface ActionThrowableAdvice extends ThrowableAdvice, ControllerAction
 
     if (action == null) return;
 
+    builder.withMessage(problem.getDetail());
     builder.withIdentifier((String) problem.getAdditionalProperties().get("code"));
     builder.with("action", action.toSlug());
   }

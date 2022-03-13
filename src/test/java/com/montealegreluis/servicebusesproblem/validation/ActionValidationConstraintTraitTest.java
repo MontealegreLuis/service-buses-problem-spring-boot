@@ -20,7 +20,7 @@ import org.springframework.web.servlet.HandlerMapping;
 
 final class ActionValidationConstraintTraitTest {
   @Test
-  void it_includes_action_prefix_in_problem_code() {
+  void it_includes_action_prefix_in_problem_code_and_in_detail() {
     var trait =
         new ActionValidationConstraintTrait() {
           @Override
@@ -38,11 +38,12 @@ final class ActionValidationConstraintTraitTest {
 
     var apiProblem = response.getBody();
     assertNotNull(apiProblem);
+    assertEquals("Cannot search concerts. Invalid input provided", apiProblem.getDetail());
     assertEquals("search-concerts-invalid-input", apiProblem.getAdditionalProperties().get("code"));
   }
 
   @Test
-  void it_does_not_include_action_prefix_in_problem_code() {
+  void it_does_not_include_action_prefix_in_problem_code_and_in_detail() {
     var trait =
         new ActionValidationConstraintTrait() {
           @Override
@@ -60,6 +61,7 @@ final class ActionValidationConstraintTraitTest {
 
     var apiProblem = response.getBody();
     assertNotNull(apiProblem);
+    assertEquals("Invalid input provided", apiProblem.getDetail());
     assertEquals("invalid-input", apiProblem.getAdditionalProperties().get("code"));
   }
 
@@ -68,7 +70,7 @@ final class ActionValidationConstraintTraitTest {
     var activity =
         Activity.error(
             "search-concerts-invalid-input",
-            "Invalid input provided",
+            "Cannot search concerts. Invalid input provided",
             (context) -> {
               context.put("errors", errors);
               context.put("action", "search-concerts");
