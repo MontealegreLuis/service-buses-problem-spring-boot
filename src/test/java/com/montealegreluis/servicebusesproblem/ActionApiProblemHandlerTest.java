@@ -9,7 +9,7 @@ final class ActionApiProblemHandlerTest {
   @Test
   void it_gets_its_handler_mapping() {
     var mapping = new RequestMappingHandlerMapping();
-    var handler = new ActionApiProblemHandler(mapping);
+    var handler = new ActionApiProblemHandler(mapping) {};
 
     var handlerMapping = handler.handlerMapping();
 
