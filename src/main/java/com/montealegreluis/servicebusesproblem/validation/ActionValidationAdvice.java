@@ -1,3 +1,4 @@
 package com.montealegreluis.servicebusesproblem.validation;
 
-public interface ActionValidationAdvice extends ActionValidationConstraintTrait {}
+public interface ActionValidationAdvice
+    extends ActionValidationConstraintTrait, ActionMethodArgumentNotValidTrait {}
