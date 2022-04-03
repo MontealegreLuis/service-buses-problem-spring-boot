@@ -10,6 +10,7 @@ import com.montealegreluis.apiproblemspringboot.validation.RequiredValueConstrai
 import com.montealegreluis.servicebuses.Action;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +25,8 @@ final class ActionValidationConstraintTraitTest {
     var trait =
         new ActionValidationConstraintTrait() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return Action.withoutSuffix("SearchConcerts", "");
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.of(Action.named("SearchConcerts"));
           }
 
           @Override
@@ -47,8 +48,8 @@ final class ActionValidationConstraintTraitTest {
     var trait =
         new ActionValidationConstraintTrait() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return null;
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.empty();
           }
 
           @Override
@@ -81,8 +82,8 @@ final class ActionValidationConstraintTraitTest {
     var trait =
         new ActionValidationConstraintTrait() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return Action.withoutSuffix("SearchConcerts", "");
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.of(Action.named("SearchConcerts"));
           }
 
           @Override
@@ -112,8 +113,8 @@ final class ActionValidationConstraintTraitTest {
     var trait =
         new ActionValidationConstraintTrait() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return null;
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.empty();
           }
 
           @Override

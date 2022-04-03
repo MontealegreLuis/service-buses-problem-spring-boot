@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import com.montealegreluis.activityfeed.Activity;
 import com.montealegreluis.activityfeed.ActivityFeed;
 import com.montealegreluis.servicebuses.Action;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -19,8 +20,8 @@ final class ActionThrowableAdviceTest {
     var advice =
         new ActionThrowableAdvice() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return Action.withoutSuffix("SearchConcerts", "");
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.of(Action.named("SearchConcerts"));
           }
 
           @Override
@@ -46,8 +47,8 @@ final class ActionThrowableAdviceTest {
     var advice =
         new ActionThrowableAdvice() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return null;
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.empty();
           }
 
           @Override
@@ -84,8 +85,8 @@ final class ActionThrowableAdviceTest {
     var advice =
         new ActionThrowableAdvice() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return Action.withoutSuffix("SearchConcerts", "");
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.of(Action.named("SearchConcerts"));
           }
 
           @Override
@@ -118,8 +119,8 @@ final class ActionThrowableAdviceTest {
     var advice =
         new ActionThrowableAdvice() {
           @Override
-          public Action actionFrom(NativeWebRequest request) {
-            return null;
+          public Optional<Action> actionFrom(NativeWebRequest request) {
+            return Optional.empty();
           }
 
           @Override

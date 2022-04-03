@@ -24,7 +24,8 @@ final class ControllerActionTraitTest {
 
     var action = controllerAction.actionFrom(nativeRequest);
 
-    assertEquals(Action.withoutSuffix("SearchConcertsController", "Controller"), action);
+    assertTrue(action.isPresent());
+    assertEquals(Action.withoutSuffix("SearchConcertsController", "Controller"), action.get());
   }
 
   @Test
@@ -34,7 +35,7 @@ final class ControllerActionTraitTest {
 
     var action = controllerAction.actionFrom(nativeWebRequest);
 
-    assertNull(action);
+    assertFalse(action.isPresent());
   }
 
   @Test
@@ -45,7 +46,7 @@ final class ControllerActionTraitTest {
 
     var action = controllerAction.actionFrom(nativeRequest);
 
-    assertNull(action);
+    assertFalse(action.isPresent());
   }
 
   @BeforeEach
